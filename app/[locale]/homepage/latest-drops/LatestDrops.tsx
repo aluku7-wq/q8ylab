@@ -6,12 +6,23 @@ import Card from "@/components/card/Card";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 const LatestDrops = () => {
+    type tItem = {
+        enName: string;
+        image: string;
+        enPrice: string;
+        enNetPrice: string;
+        arName: string;
+        arPrice: string;
+        arNetPrice: string;
+        id: string;
+        enCategory: string;
+    };
     const localActive = useLocale();
 
     const title = localActive === "ar" ? "أحدث القطرات" : "Latest Drops";
     const link = localActive === "ar" ? "عرض الكل" : "View all";
     const latestDrops = data.filter(
-        (item: any) => item.enCategory === "Latest Drops"
+        (item: tItem) => item.enCategory === "Latest Drops"
     );
     return (
         <div className="flex justify-center w-full text-gray-700">
@@ -27,7 +38,7 @@ const LatestDrops = () => {
                     </Link>
                 </div>
                 <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
-                    {latestDrops.map((item: any, index: number) => {
+                    {latestDrops.map((item: tItem, index: number) => {
                         return <Card data={item} key={index} />;
                     })}
                 </div>

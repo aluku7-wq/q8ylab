@@ -1,6 +1,5 @@
 "use client";
-import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
+import { useLocale } from "next-intl";
 import { ChangeEvent, useEffect, useTransition } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";

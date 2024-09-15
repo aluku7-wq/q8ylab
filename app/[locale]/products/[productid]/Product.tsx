@@ -8,16 +8,37 @@ import { IoAddSharp } from "react-icons/io5";
 import Card from "@/components/card/Card";
 
 const Product = ({ id }: { id: string }) => {
-    const product = data.find((item: any) => item.id === id);
+    const localActive = useLocale();
+    const product = data.find(
+        (item: {
+            enName: string;
+            image: string;
+            enPrice: string;
+            enNetPrice: string;
+            arName: string;
+            arPrice: string;
+            arNetPrice: string;
+            id: string;
+        }) => item.id === id
+    );
     if (!product) {
         return notFound();
     }
     const relatedProducts = data.filter(
-        (item: any) =>
-            item.enCategory === product?.enCategory && item.id !== product.id
+        (item: {
+            enName: string;
+            image: string;
+            enPrice: string;
+            enNetPrice: string;
+            arName: string;
+            arPrice: string;
+            arNetPrice: string;
+            id: string;
+            enCategory: string;
+        }) => item.enCategory === product?.enCategory && item.id !== product.id
     );
     console.log(relatedProducts);
-    const localActive = useLocale();
+
     const item = {
         title: localActive === "ar" ? product.arName : product.enName,
         image: product.image,
@@ -102,9 +123,24 @@ const Product = ({ id }: { id: string }) => {
                     <p className="text-3xl ">{relatedDesc}</p>
                 </div>
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 pb-16">
-                    {relatedProducts.map((item: any, index: number) => {
-                        return <Card data={item} key={index} />;
-                    })}
+                    {relatedProducts.map(
+                        (
+                            item: {
+                                enName: string;
+                                image: string;
+                                enPrice: string;
+                                enNetPrice: string;
+                                arName: string;
+                                arPrice: string;
+                                arNetPrice: string;
+                                id: string;
+                                enCategory: string;
+                            },
+                            index: number
+                        ) => {
+                            return <Card data={item} key={index} />;
+                        }
+                    )}
                 </div>
             </div>
         </div>
