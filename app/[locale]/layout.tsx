@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
+import ReduxProvider from "@/redux/ReduxProvider";
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -23,15 +24,17 @@ export default async function LocaleLayout({
 
     return (
         <html lang={locale}>
-            <body className={inter.className}>
-                <NextIntlClientProvider messages={messages}>
-                    <div className="flex flex-col min-h-screen justify-between w-full">
-                        <Header />
-                        {children}
-                        <Footer />
-                    </div>
-                </NextIntlClientProvider>
-            </body>
+            <ReduxProvider>
+                <body className={inter.className}>
+                    <NextIntlClientProvider messages={messages}>
+                        <div className="flex flex-col min-h-screen justify-between w-full">
+                            <Header />
+                            {children}
+                            <Footer />
+                        </div>
+                    </NextIntlClientProvider>
+                </body>
+            </ReduxProvider>
         </html>
     );
 }

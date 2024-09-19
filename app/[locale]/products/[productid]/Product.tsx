@@ -6,8 +6,12 @@ import { useLocale } from "next-intl";
 import Image from "next/image";
 import { IoAddSharp } from "react-icons/io5";
 import Card from "@/components/card/Card";
+import { useAppDispatch } from "@/redux/hooks";
+import { addToCart } from "@/redux/slices/cart/cartSlice";
 
 const Product = ({ id }: { id: string }) => {
+    // redux
+    const dispatch = useAppDispatch();
     const localActive = useLocale();
     const product = data.find(
         (item: {
@@ -37,7 +41,6 @@ const Product = ({ id }: { id: string }) => {
             enCategory: string;
         }) => item.enCategory === product?.enCategory && item.id !== product.id
     );
-    console.log(relatedProducts);
 
     const item = {
         title: localActive === "ar" ? product.arName : product.enName,
@@ -109,7 +112,12 @@ const Product = ({ id }: { id: string }) => {
                             {currency}
                             {item.netPrice}
                         </h1>
-                        <button className="w-full lg:w-10rem py-3 bg-black text-white rounded-md">
+                        <button
+                            className="w-full lg:w-10rem py-3 bg-black text-white rounded-md"
+                            onClick={() =>
+                                dispatch(addToCart({ ...product, quantity: 1 }))
+                            }
+                        >
                             {cart}
                         </button>
                     </div>
